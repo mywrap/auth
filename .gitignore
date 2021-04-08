@@ -11,4 +11,6 @@ profile*.pdf
 
 # config file with real password
 *ignore*.sh
-*.key
+example.key
+example.crt
+example.pub
