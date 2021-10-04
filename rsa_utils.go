@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"bytes"
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
@@ -71,4 +72,31 @@ func CheckIsRSAPair(private *rsa.PrivateKey, public *rsa.PublicKey) bool {
 		return false
 	}
 	return true
+}
+
+// EncodeRSAPrivateToPem returns encoded PEM data
+func EncodeRSAPrivateToPem(rsaKey *rsa.PrivateKey) []byte {
+	keyBytes := x509.MarshalPKCS1PrivateKey(rsaKey)
+	buffer := &bytes.Buffer{}
+	err := pem.Encode(buffer,
+		&pem.Block{Type: "RSA PRIVATE KEY", Bytes: keyBytes})
+	if err != nil { // should be unreachable
+		return nil
+	}
+	return buffer.Bytes()
+}
+
+// EncodeRSAPrivateToPem returns encoded PEM data
+func EncodeRSAPublicToPem(rsaKey *rsa.PublicKey) []byte {
+	keyBytes, err := x509.MarshalPKIXPublicKey(rsaKey)
+	if err != nil { // should be unreachable
+		return nil
+	}
+	buffer := &bytes.Buffer{}
+	err = pem.Encode(buffer,
+		&pem.Block{Type: "PUBLIC KEY", Bytes: keyBytes})
+	if err != nil {
+		return nil
+	}
+	return buffer.Bytes()
 }

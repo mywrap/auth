@@ -40,4 +40,12 @@ func TestReadRSAPem(t *testing.T) {
 	if CheckIsRSAPair(privateKey, publicKey) != true {
 		t.Fatalf("error CheckIsRSAPair")
 	}
+
+	// encode to PEM -----------------------------------------------------------
+	if string(privatePemBytes) != string(EncodeRSAPrivateToPem(privateKey)) {
+		t.Errorf("error EncodeRSAPrivateToPem")
+	}
+	if string(publicPemBytes) != string(EncodeRSAPublicToPem(publicKey)) {
+		t.Errorf("error EncodeRSAPublicToPem")
+	}
 }
