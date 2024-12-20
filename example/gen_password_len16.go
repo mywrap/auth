@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	for i := 0; i < 128; i++ {
-		p := auth.GenRandomPassword(8)
+	for i := 0; i < 512; i++ {
+		p := auth.GenRandomPassword(16)
 
 		if true { // my personal options
 			if strings.Index("abcdefghijklmnopqrstuvwxyz", p[0:1]) == -1 {
